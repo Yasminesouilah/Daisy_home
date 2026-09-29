@@ -1,0 +1,1 @@
+export default function ProductForm() { return <section><h1>New product</h1><form className="inline-form"><input name="name" placeholder="Product name" required /><input name="price" type="number" min="0" placeholder="Price" required /><button className="button" type="submit">Save product</button></form></section>; }

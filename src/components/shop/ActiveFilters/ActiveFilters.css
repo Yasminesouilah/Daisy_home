@@ -1,0 +1,21 @@
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.active-filters__chip {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.75rem;
+  background: var(--color-rose-soft);
+  color: var(--color-rose-dark);
+  font-size: 0.8rem;
+}
+
+.active-filters__chip:hover { background: var(--color-rose); color: var(--color-white); }
+.active-filters__clear { padding: 0.4rem 0.2rem; color: var(--color-brown-soft); font-size: 0.8rem; text-decoration: underline; }

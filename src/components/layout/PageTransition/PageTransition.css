@@ -1,0 +1,10 @@
+.page-transition {
+  transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.page-transition--in { opacity: 1; transform: translateY(0); }
+.page-transition--out { opacity: 0; transform: translateY(6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition { transition: none; }
+}

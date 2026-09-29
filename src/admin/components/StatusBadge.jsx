@@ -1,0 +1,1 @@
+export default function StatusBadge({ children }) { return <span className={`status-badge status-badge--${String(children).toLowerCase()}`}>{children}</span>; }

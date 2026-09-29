@@ -1,0 +1,54 @@
+:root {
+  /* Colors */
+  --color-cream: #faf6f1;
+  --color-cream-dark: #f3ebe2;
+  --color-beige: #efe4da;
+  --color-rose: #c58f86;
+  --color-rose-dark: #b07b72;
+  --color-rose-soft: #ecd5cf;
+  --color-brown: #5a3a31;
+  --color-brown-soft: #8a6b60;
+  --color-sage: #7d8462;
+  --color-line: #e6dbd0;
+  --color-white: #ffffff;
+  --color-whatsapp: #25d366;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-script: "Homemade Apple", cursive;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 5rem;
+
+  /* Shape */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(90, 58, 49, 0.06);
+  --shadow-lift: 0 12px 32px rgba(90, 58, 49, 0.12);
+
+  /* Layout */
+  --container: 1200px;
+  --navbar-height: 72px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --transition: 0.3s var(--ease);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 64px;
+  }
+}

@@ -1,0 +1,20 @@
+.confirmation-page { max-width: 620px; padding-block: var(--space-8); text-align: center; }
+.confirmation-page h1 { margin-top: var(--space-2); font-size: 2.2rem; }
+.confirmation-page__thanks { margin-top: var(--space-3); color: var(--color-brown-soft); }
+.confirmation-page__number { margin-top: var(--space-2); font-size: 0.95rem; }
+.confirmation-page__number strong { color: var(--color-rose-dark); }
+
+.confirmation-page__card { margin-top: var(--space-6); padding: var(--space-5); background: var(--color-cream-dark); text-align: left; }
+.confirmation-page__items { display: grid; gap: var(--space-3); font-size: 0.88rem; }
+.confirmation-page__items li { display: flex; justify-content: space-between; gap: var(--space-3); }
+.confirmation-page__items li span:first-child { min-width: 0; }
+.confirmation-page__items li span:last-child { flex: 0 0 auto; font-weight: 600; white-space: nowrap; }
+.confirmation-page__totals { display: grid; gap: var(--space-2); margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-line); font-size: 0.9rem; }
+.confirmation-page__totals > div { display: flex; justify-content: space-between; gap: var(--space-3); }
+.confirmation-page__totals dd { margin: 0; }
+.confirmation-page__total { margin-top: var(--space-1); padding-top: var(--space-3); border-top: 1px solid var(--color-line); font-size: 1.05rem; font-weight: 600; }
+
+.confirmation-page__delivery { margin-top: var(--space-5); color: var(--color-brown-soft); font-size: 0.88rem; text-align: left; }
+.confirmation-page__delivery h2 { margin-bottom: var(--space-2); color: var(--color-brown); font-family: var(--font-sans); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; }
+.confirmation-page__next { margin-top: var(--space-5); color: var(--color-brown-soft); font-size: 0.85rem; }
+.confirmation-page__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-6); }

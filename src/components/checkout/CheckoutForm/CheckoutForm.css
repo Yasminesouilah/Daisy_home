@@ -1,0 +1,19 @@
+.checkout-form h2 { margin-bottom: var(--space-5); font-size: 1.4rem; }
+.field { margin-bottom: var(--space-4); }
+.field label { display: block; margin-bottom: var(--space-2); color: var(--color-brown-soft); font-size: 0.82rem; font-weight: 600; }
+.field input, .field select, .field textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-white);
+  font: inherit;
+  font-size: 0.9rem;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--color-rose); outline-offset: 1px; }
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: #a83e36; }
+.field__error { display: block; margin-top: 6px; color: #a83e36; font-size: 0.78rem; }
+.field textarea { resize: vertical; }
+.field-row { display: grid; gap: var(--space-4); }
+
+@media (min-width: 640px) { .field-row { grid-template-columns: 1fr 1fr; } }

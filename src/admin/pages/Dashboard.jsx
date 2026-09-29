@@ -1,0 +1,1 @@
+export default function Dashboard() { return <section><h1>Dashboard</h1><p>Store overview will appear here when the backend is connected.</p></section>; }

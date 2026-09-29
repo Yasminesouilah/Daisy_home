@@ -1,0 +1,9 @@
+.cart-page h1 { margin-top: var(--space-1); margin-bottom: var(--space-6); font-size: 2.2rem; }
+.cart-page__layout { display: grid; align-items: start; gap: var(--space-6); }
+.cart-page__items { display: flex; min-width: 0; flex-direction: column; }
+.cart-page__items > .btn { align-self: flex-start; margin-top: var(--space-5); }
+.cart-page__loading { padding-block: var(--space-7); color: var(--color-brown-soft); text-align: center; }
+
+@media (min-width: 900px) {
+  .cart-page__layout { grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-7); }
+}

@@ -1,0 +1,1 @@
+export default function Messages() { return <section><h1>Messages</h1><p>Contact messages will be available when the backend is connected.</p></section>; }

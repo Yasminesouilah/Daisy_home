@@ -1,0 +1,11 @@
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+}
+.badge--sale { background: var(--color-rose-dark); }
+.badge--new { background: var(--color-sage); }

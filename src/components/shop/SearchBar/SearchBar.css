@@ -1,0 +1,25 @@
+.search-bar {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-white);
+  color: var(--color-brown-soft);
+}
+
+.search-bar input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-brown);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.search-bar input::-webkit-search-cancel-button { display: none; }
+.search-bar button { display: grid; flex: 0 0 auto; place-items: center; color: var(--color-brown-soft); }
+.search-bar button:hover { color: var(--color-rose-dark); }

@@ -1,0 +1,78 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition),
+    border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn__icon {
+  display: inline-flex;
+  transition: transform var(--transition);
+}
+.btn__icon svg {
+  width: 18px;
+  height: 18px;
+}
+.btn:hover .btn__icon {
+  transform: translateX(3px);
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Sizes */
+.btn--sm { padding: 0.55rem 1.1rem; font-size: 0.8rem; }
+.btn--md { padding: 0.8rem 1.6rem; font-size: 0.9rem; }
+.btn--lg { padding: 1rem 2.1rem; font-size: 0.95rem; }
+.btn--full { width: 100%; }
+
+/* Variants */
+.btn--primary {
+  background: var(--color-rose-dark);
+  color: var(--color-white);
+}
+.btn--primary:hover {
+  background: var(--color-brown);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn--dark {
+  background: var(--color-brown);
+  color: var(--color-cream);
+}
+.btn--dark:hover {
+  background: var(--color-rose-dark);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--color-rose);
+  color: var(--color-rose-dark);
+}
+.btn--outline:hover {
+  background: var(--color-rose-soft);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-brown);
+}
+.btn--ghost:hover {
+  background: var(--color-beige);
+}

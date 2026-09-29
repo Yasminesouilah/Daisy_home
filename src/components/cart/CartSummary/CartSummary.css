@@ -1,0 +1,6 @@
+.cart-summary { padding: var(--space-5); background: var(--color-cream-dark); }
+.cart-summary h2 { margin-bottom: var(--space-4); font-size: 1.2rem; }
+.cart-summary dl { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); font-size: 0.92rem; }
+.cart-summary dl > div { display: flex; justify-content: space-between; gap: var(--space-3); }
+.cart-summary dd { margin: 0; }
+.cart-summary__total { margin-top: var(--space-1); padding-top: var(--space-3); border-top: 1px solid var(--color-line); font-size: 1.1rem; font-weight: 600; }

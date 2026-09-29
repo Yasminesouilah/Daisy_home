@@ -1,0 +1,9 @@
+.contact-page h1 { margin-top: var(--space-1); font-size: 2.2rem; }
+.contact-page__intro { max-width: 52ch; margin-top: var(--space-3); color: var(--color-brown-soft); }
+.contact-page__layout { display: grid; gap: var(--space-6); margin-top: var(--space-7); }
+.contact-page__side { align-self: start; padding: var(--space-5); background: var(--color-cream-dark); }
+
+@media (min-width: 900px) {
+  .contact-page__layout { grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr); align-items: start; gap: var(--space-7); }
+  .contact-page__side { padding: var(--space-6); }
+}

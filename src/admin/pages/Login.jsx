@@ -1,0 +1,4 @@
+import { useNavigate } from 'react-router-dom';
+import { useAdminAuth } from '../context/AuthContext.jsx';
+
+export default function Login() { const { signIn } = useAdminAuth(); const navigate = useNavigate(); function submit(event) { event.preventDefault(); signIn('local-placeholder'); navigate('/admin', { replace: true }); } return <main className="page-content"><h1 className="page-title">Admin sign in</h1><form className="inline-form" onSubmit={submit}><input type="email" autoComplete="username" placeholder="Email" required /><input type="password" autoComplete="current-password" placeholder="Password" required /><button className="button">Sign in</button></form></main>; }

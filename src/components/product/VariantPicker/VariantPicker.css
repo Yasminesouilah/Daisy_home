@@ -1,0 +1,22 @@
+.variant-picker__group { margin-bottom: var(--space-4); border: 0; padding: 0; }
+
+.variant-picker__label {
+  margin-bottom: var(--space-2);
+  color: var(--color-brown-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.variant-picker__options { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+.variant-picker__option {
+  min-height: 40px;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-white);
+  font-size: 0.85rem;
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+}
+
+.variant-picker__option:hover { border-color: var(--color-rose); }
+.variant-picker__option.is-active { border-color: var(--color-rose-dark); background: var(--color-rose-dark); color: var(--color-white); }

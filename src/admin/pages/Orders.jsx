@@ -1,0 +1,1 @@
+export default function Orders() { return <section><h1>Orders</h1><p>Orders will be available when the backend is connected.</p></section>; }

@@ -1,0 +1,10 @@
+.contact-info__item { display: flex; flex-direction: column; gap: 3px; margin-bottom: var(--space-4); overflow-wrap: anywhere; }
+.contact-info__label { color: var(--color-brown-soft); font-size: 0.75rem; text-transform: uppercase; }
+.contact-info__item a, .contact-info__item > span:not(.contact-info__label) { font-size: 0.95rem; }
+.contact-info__item a:hover { color: var(--color-rose-dark); }
+
+.contact-info__actions { display: grid; gap: var(--space-3); margin-top: var(--space-5); }
+.contact-info__whatsapp, .contact-info__instagram { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: var(--space-2); padding: 0.7rem 1rem; font-size: 0.88rem; font-weight: 600; transition: transform var(--transition), box-shadow var(--transition); }
+.contact-info__whatsapp { background: var(--color-whatsapp); color: var(--color-white); }
+.contact-info__instagram { background: var(--color-rose-soft); color: var(--color-rose-dark); }
+.contact-info__whatsapp:hover, .contact-info__instagram:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); }
