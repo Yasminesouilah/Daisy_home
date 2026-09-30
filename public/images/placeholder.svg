@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" role="img" aria-label="Image bientôt disponible">
-  <rect width="600" height="750" fill="#f3ebe2"/>
-  <g fill="none" stroke="#c58f86" stroke-linecap="round" stroke-width="7" opacity=".8">
-    <path d="M300 405c0-65 7-123 17-173M313 342c-46-35-74-75-85-119M307 371c52-29 88-67 110-111"/>
-    <path d="M300 220c-28-31-69-14-67 18 2 26 35 41 67 61 32-20 65-35 67-61 2-32-39-49-67-18z"/>
-  </g>
-  <circle cx="300" cy="405" r="14" fill="#c58f86"/>
-</svg>

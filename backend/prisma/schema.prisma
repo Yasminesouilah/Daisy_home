@@ -1,0 +1,100 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+type Variant {
+  label   String
+  options String[]
+}
+
+type Customer {
+  fullName   String
+  phone      String
+  wilaya     String
+  wilayaName String
+  commune    String
+  address    String
+  notes      String @default("")
+}
+
+type OrderItem {
+  productId String
+  name      String
+  image     String?
+  price     Float
+  quantity  Int
+  variant   String?
+}
+
+model Product {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String    @unique
+  category    String
+  price       Float
+  oldPrice    Float?
+  images      String[]
+  description String    @default("")
+  variants    Variant[]
+  isNew       Boolean   @default(false)
+  popularity  Int       @default(0)
+  rating      Float     @default(0)
+  reviews     Int       @default(0)
+  stock       Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([category])
+}
+
+model Order {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderNumber   String      @unique
+  customer      Customer
+  items         OrderItem[]
+  subtotal      Float
+  deliveryFee   Float
+  total         Float
+  paymentMethod String      @default("COD")
+  status        OrderStatus @default(pending)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  shipped
+  delivered
+  cancelled
+}
+
+model Counter {
+  id  String @id @map("_id")
+  seq Int    @default(1000)
+}
+
+model Admin {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  phone     String   @default("")
+  email     String   @default("")
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
