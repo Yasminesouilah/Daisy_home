@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import { CATEGORIES } from "../data/categories.js";
 
 const DEFAULT_SORT = "newest";
 const parsePrice = (value) => value !== null && value.trim() !== "" && Number.isFinite(Number(value))
@@ -15,6 +16,25 @@ export function useShopFilters(products) {
   const min = parsePrice(minParam);
   const max = parsePrice(maxParam);
   const sort = params.get("sort") || DEFAULT_SORT;
+  const categories = useMemo(() => {
+    const available = new Map(
+      CATEGORIES.filter((item) => !item.virtual).map((item) => [item.slug, item]),
+    );
+
+    products.forEach((product) => {
+      if (product.category && !available.has(product.category)) {
+        const name = product.category
+          .split("-")
+          .filter(Boolean)
+          .map((word) => word.charAt(0).toLocaleUpperCase() + word.slice(1))
+          .join(" ");
+        available.set(product.category, { slug: product.category, name });
+      }
+    });
+
+    available.set("nouveautes", CATEGORIES.find((item) => item.slug === "nouveautes"));
+    return [...available.values()];
+  }, [products]);
 
   const updateParams = (updates) => {
     const next = new URLSearchParams(params);
@@ -66,6 +86,7 @@ export function useShopFilters(products) {
     min,
     max,
     sort,
+    categories,
     setCategory,
     setQuery,
     setPriceRange,

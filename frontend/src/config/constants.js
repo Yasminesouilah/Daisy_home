@@ -8,3 +8,7 @@ export const DELIVERY_FEE = 600;
 export const FREE_DELIVERY_THRESHOLD = 15000;
 
 export const PLACEHOLDER_IMAGE = "/images/placeholder.svg";
+
+export function resolveImageUrl(image) {
+	return image || PLACEHOLDER_IMAGE;
+}

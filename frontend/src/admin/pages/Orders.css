@@ -1,0 +1,100 @@
+.admin-orders__header {
+  margin-bottom: 1.25rem;
+}
+
+.admin-orders__eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--color-rose-dark);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.admin-orders__header h1 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.admin-orders__toolbar {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-orders__search input {
+  width: min(100%, 440px);
+  min-height: 42px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+}
+
+.admin-orders__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.admin-orders__filters button {
+  min-height: 36px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #e9e1da;
+  border-radius: 7px;
+  background: var(--color-white);
+  color: #75655d;
+  font-size: 0.8rem;
+}
+
+.admin-orders__filters button:hover {
+  background: var(--color-beige);
+}
+
+.admin-orders__filters button.is-active {
+  border-color: #e3cfc7;
+  background: #f2e5df;
+  color: #704a40;
+  font-weight: 600;
+}
+
+.admin-orders__error {
+  margin-bottom: 1rem;
+  color: #a33b35;
+}
+
+.admin-orders__loading {
+  padding: 2rem 0;
+  color: var(--color-brown-soft);
+}
+
+.admin-orders__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+}
+
+.admin-orders__pagination button {
+  min-height: 36px;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+}
+
+.admin-orders__pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.admin-orders__visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}

@@ -4,7 +4,7 @@ import app from "./app.js";
 
 async function start() {
   await prisma.$connect();
-  console.log("MongoDB connected (via Prisma)");
+  console.log("Database connected (via Prisma)");
 
   app.listen(env.port, () => {
     console.log(`Daisy Home API running on http://localhost:${env.port}`);

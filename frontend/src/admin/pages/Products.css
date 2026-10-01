@@ -1,0 +1,167 @@
+.admin-products__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-products__eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--color-rose-dark);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.admin-products__header h1 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.admin-products__add {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #e1cbc2;
+  border-radius: 7px;
+  background: #f4e9e4;
+  color: var(--color-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #744d43;
+}
+
+.admin-products__add:hover {
+  background: #edddd6;
+}
+
+.admin-products__thumb {
+  display: block;
+  width: 42px;
+  height: 50px;
+  border-radius: var(--radius-sm);
+  background: var(--color-beige);
+  object-fit: cover;
+}
+
+.admin-products__actions {
+  display: flex;
+  gap: 0.75rem;
+  white-space: nowrap;
+}
+
+.admin-products__actions a {
+  color: var(--color-rose-dark);
+}
+
+.admin-products__actions button {
+  color: #a33b35;
+}
+
+.admin-products__delete-trigger:hover {
+  color: #7d2924;
+}
+
+.admin-products__actions a:hover,
+.admin-products__actions button:hover {
+  text-decoration: underline;
+}
+
+.admin-products__error {
+  margin-bottom: 1rem;
+  color: #a33b35;
+}
+
+.admin-products__loading {
+  padding: 2rem 0;
+  color: var(--color-brown-soft);
+}
+
+.admin-delete-dialog__backdrop {
+  position: fixed;
+  z-index: 300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(45 35 30 / 42%);
+  backdrop-filter: blur(2px);
+}
+
+.admin-delete-dialog {
+  width: min(100%, 440px);
+  padding: 1.5rem;
+  border: 1px solid #eaded7;
+  border-radius: 9px;
+  background: #fffdfa;
+  box-shadow: 0 18px 55px rgb(47 34 28 / 20%);
+  animation: admin-dialog-enter 150ms ease-out;
+}
+
+.admin-delete-dialog__eyebrow {
+  margin: 0 0 0.5rem;
+  color: #a16f61;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-delete-dialog h2 {
+  margin: 0;
+  color: #493a34;
+  font-size: 1.45rem;
+}
+
+.admin-delete-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.admin-delete-dialog__actions button {
+  min-height: 40px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid #e8dfd8;
+  border-radius: 6px;
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.admin-delete-dialog__cancel {
+  background: #fff;
+  color: #6e5f57;
+}
+
+.admin-delete-dialog__confirm {
+  border-color: #a33b35 !important;
+  background: #a33b35;
+  color: #fff;
+}
+
+.admin-delete-dialog__confirm:hover:not(:disabled) {
+  background: #842f2a;
+}
+
+.admin-delete-dialog__actions button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.admin-delete-dialog__error {
+  margin-top: 0.8rem;
+  color: #a33b35;
+  font-size: 0.85rem;
+}
+
+@keyframes admin-dialog-enter {
+  from { opacity: 0; transform: translateY(6px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 640px) {
+  .admin-products__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

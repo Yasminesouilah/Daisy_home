@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { useOrder } from "../hooks/useOrder";
-import { WILAYAS } from "../data/wilayas";
+import { WILAYAS as FALLBACK_WILAYAS } from "../data/wilayas";
+import { getDeliveryFees } from "../services/deliveryService.js";
 import { validateCheckout } from "../utils/validators";
 import { createOrder } from "../services/orderService";
 import CheckoutForm from "../components/checkout/CheckoutForm";
@@ -21,8 +22,22 @@ export default function Checkout() {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [wilayas, setWilayas] = useState(FALLBACK_WILAYAS);
 
-  const wilaya = WILAYAS.find((item) => item.code === values.wilaya);
+  useEffect(() => {
+    let active = true;
+    getDeliveryFees()
+      .then((fees) => {
+        if (active && fees.length) setWilayas(fees);
+      })
+      .catch(() => {});
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const wilaya = wilayas.find((item) => item.code === values.wilaya);
   const deliveryFee = wilaya ? wilaya.fee : 0;
   const total = subtotal + deliveryFee;
 
@@ -55,8 +70,8 @@ export default function Checkout() {
       setLastOrder(order);
       clearCart();
       navigate("/order-confirmation");
-    } catch {
-      setSubmitError("Une erreur est survenue. Veuillez réessayer.");
+    } catch (error) {
+      setSubmitError(error.message || "Une erreur est survenue. Veuillez réessayer.");
       setSubmitting(false);
     }
   };

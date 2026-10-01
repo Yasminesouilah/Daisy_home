@@ -12,14 +12,14 @@ const PRICE_STEPS = [
 	{ label: "Plus de 6 000 DA", min: 6000, max: null },
 ];
 
-function FilterContent({ category, setCategory, min, max, setPriceRange }) {
+function FilterContent({ category, categories = CATEGORIES, setCategory, min, max, setPriceRange }) {
 	return (
 		<>
 			<div className="filter-group">
 				<h2>Catégories</h2>
 				<ul>
 					<li><button type="button" className={!category ? "is-active" : ""} onClick={() => setCategory("")}>Toutes</button></li>
-					{CATEGORIES.map((item) => (
+					{categories.map((item) => (
 						<li key={item.slug}>
 							<button type="button" className={category === item.slug ? "is-active" : ""} onClick={() => setCategory(item.slug)}>{item.name}</button>
 						</li>

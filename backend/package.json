@@ -8,19 +8,26 @@
     "start": "node src/server.js",
     "test": "node --test",
     "postinstall": "prisma generate",
-    "db:push": "prisma db push",
+    "migrate": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "seed": "node src/seeds/seedProducts.js",
-    "seed:force": "node src/seeds/seedProducts.js --force"
+    "seed:force": "node src/seeds/seedProducts.js --force",
+    "seed:admin": "node src/seeds/seedAdmin.js",
+    "seed:categories": "node src/seeds/seedCategories.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.1",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "express-rate-limit": "^8.7.0",
     "helmet": "^7.2.0",
+    "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.0",
+    "multer": "^2.4.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, it } from "node:test";
 import { createOrder } from "../src/controllers/order.controller.js";
 import { prisma } from "../src/lib/prisma.js";
 
-const productId = "64b000000000000000000001";
+const productId = "cmf8u7q3f0000abcd1234efgh";
 const product = {
   id: productId,
   name: "Bougie parfumée",

@@ -1,0 +1,219 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f3ef;
+  color: #493a34;
+}
+
+.admin-layout__sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex: 0 0 min(232px, 19vw);
+  flex-direction: column;
+  height: 100vh;
+  padding: 1.25rem clamp(0.55rem, 1vw, 0.85rem) 1rem;
+  border-right: 1px solid #ece5df;
+  background: #fffdfa;
+  color: #493a34;
+}
+
+.admin-layout__brand {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  column-gap: 0.6rem;
+  margin: 0 0 1.9rem;
+  padding: 0 0.45rem;
+}
+
+.admin-layout__brand-mark {
+  grid-row: span 2;
+  display: grid;
+  width: 32px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #d9bcb0;
+  border-radius: 50%;
+  color: #9c6b5d;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+}
+
+.admin-layout__brand-name {
+  align-self: end;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.admin-layout__brand-caption {
+  align-self: start;
+  margin-top: 0.18rem;
+  color: #9b8980;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.admin-layout__section-label {
+  margin: 0 0 0.45rem;
+  padding: 0 0.8rem;
+  color: #a39289;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.admin-layout__sidebar nav {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.admin-layout__link {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0.55rem 0.8rem;
+  border-radius: 7px;
+  color: #71635c;
+  font-size: 0.83rem;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.admin-layout__link:hover {
+  background: #f8f2ee;
+  color: #684a40;
+}
+
+.admin-layout__link.is-active {
+  background: #f1e4df;
+  color: #744d43;
+  font-weight: 600;
+}
+
+.admin-layout__account {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 0.55rem;
+  row-gap: 0.45rem;
+  margin-top: auto;
+  padding: 0.8rem 0.35rem 0;
+  border-top: 1px solid #ece5df;
+  font-size: 0.72rem;
+}
+
+.admin-layout__avatar {
+  grid-row: span 2;
+  display: grid;
+  width: 30px;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #ead9d2;
+  color: #744d43;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.admin-layout__account-email {
+  overflow: hidden;
+  color: #76665e;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-layout__account button {
+  grid-column: 2;
+  justify-self: start;
+  color: #9b6c60;
+  font-size: 0.72rem;
+}
+
+.admin-layout__main {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem clamp(1rem, 3vw, 2.4rem);
+  background: #f6f3ef;
+}
+
+.admin-layout__content {
+  width: min(100%, 1380px);
+  margin-inline: auto;
+}
+
+@media (max-width: 700px) {
+  .admin-layout {
+    display: block;
+  }
+
+  .admin-layout__sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding: 0.8rem 0.9rem 0.55rem;
+  }
+
+  .admin-layout__brand {
+    margin-bottom: 1rem;
+  }
+
+  .admin-layout__section-label {
+    display: none;
+  }
+
+  .admin-layout__sidebar nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.25rem;
+  }
+
+  .admin-layout__link {
+    min-height: 38px;
+    padding: 0.45rem 0.25rem;
+    font-size: 0.7rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .admin-layout__account {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.5rem;
+    margin-top: 0.65rem;
+    padding-top: 0.6rem;
+  }
+
+  .admin-layout__avatar {
+    grid-row: auto;
+    width: 28px;
+  }
+
+  .admin-layout__account span {
+    min-width: 0;
+  }
+
+  .admin-layout__account button {
+    grid-column: auto;
+  }
+
+  .admin-layout__main {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .admin-layout__brand-mark {
+    width: 28px;
+  }
+
+  .admin-layout__brand-name {
+    font-size: 1.15rem;
+  }
+
+  .admin-layout__brand {
+    grid-template-columns: 28px minmax(0, 1fr);
+    column-gap: 0.4rem;
+  }
+}

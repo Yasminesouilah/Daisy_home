@@ -1,8 +1,30 @@
 import { generateOrderId } from "../utils/generateOrderId.js";
+import { api, hasApi } from "./api.js";
 
 const delay = (ms = 500) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function createOrder({ customer, lines, subtotal, deliveryFee, total }) {
+  if (hasApi()) {
+    return api("/orders", {
+      method: "POST",
+      body: JSON.stringify({
+        customer: {
+          fullName: customer.fullName,
+          phone: customer.phone,
+          wilaya: customer.wilaya,
+          commune: customer.commune,
+          address: customer.address,
+          notes: customer.notes || "",
+        },
+        items: lines.map((line) => ({
+          productId: line.product.id,
+          quantity: line.quantity,
+          variant: line.variant || null,
+        })),
+      }),
+    });
+  }
+
   await delay();
   return {
     orderNumber: generateOrderId(),

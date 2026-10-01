@@ -32,7 +32,7 @@ export async function listProducts(req, res) {
 
   if (q !== undefined) {
     if (typeof q !== "string") throw new ApiError(400, "La recherche est invalide.");
-    if (q.trim()) where.name = { contains: q.trim(), mode: "insensitive" };
+    if (q.trim()) where.name = { contains: q.trim() };
   }
 
   const minimum = parsePrice(minPrice, "minPrice");

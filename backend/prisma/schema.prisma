@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -7,57 +7,33 @@ generator client {
   provider = "prisma-client-js"
 }
 
-type Variant {
-  label   String
-  options String[]
-}
-
-type Customer {
-  fullName   String
-  phone      String
-  wilaya     String
-  wilayaName String
-  commune    String
-  address    String
-  notes      String @default("")
-}
-
-type OrderItem {
-  productId String
-  name      String
-  image     String?
-  price     Float
-  quantity  Int
-  variant   String?
-}
-
 model Product {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid())
   name        String
-  slug        String    @unique
+  slug        String   @unique
   category    String
   price       Float
   oldPrice    Float?
-  images      String[]
-  description String    @default("")
-  variants    Variant[]
-  isNew       Boolean   @default(false)
-  popularity  Int       @default(0)
-  rating      Float     @default(0)
-  reviews     Int       @default(0)
-  stock       Int       @default(0)
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  images      Json
+  description String   @db.Text
+  variants    Json
+  isNew       Boolean  @default(false)
+  popularity  Int      @default(0)
+  rating      Float    @default(0)
+  reviews     Int      @default(0)
+  stock       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([category])
 }
 
 model Order {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @default(cuid())
   orderNumber   String      @unique
-  customer      Customer
-  items         OrderItem[]
+  customer      Json
+  items         Json
   subtotal      Float
   deliveryFee   Float
   total         Float
@@ -76,12 +52,12 @@ enum OrderStatus {
 }
 
 model Counter {
-  id  String @id @map("_id")
+  id  String @id
   seq Int    @default(1000)
 }
 
 model Admin {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(cuid())
   email        String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
@@ -89,12 +65,20 @@ model Admin {
 }
 
 model Message {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(cuid())
   name      String
   phone     String   @default("")
   email     String   @default("")
-  message   String
+  message   String   @db.Text
   isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

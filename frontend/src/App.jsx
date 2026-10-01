@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -15,6 +15,8 @@ import CartDrawer from "./components/layout/CartDrawer/CartDrawer";
 import WhatsAppButton from "./components/layout/WhatsAppButton/WhatsAppButton";
 import PageTransition from "./components/layout/PageTransition/PageTransition";
 
+const AdminApp = lazy(() => import("./admin/AdminApp.jsx"));
+
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
@@ -24,6 +26,16 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  const location = useLocation();
+
+  if (location.pathname.startsWith("/admin")) {
+    return (
+      <Suspense fallback={<div className="admin-auth-loading">Chargement...</div>}>
+        <AdminApp />
+      </Suspense>
+    );
+  }
+
   return (
     <>
       <a href="#main-content" className="skip-link">Aller au contenu</a>

@@ -1,0 +1,101 @@
+.admin-dashboard__heading {
+  margin-bottom: 1.35rem;
+}
+
+.admin-dashboard__eyebrow,
+.admin-dashboard__welcome-label {
+  margin: 0 0 0.35rem;
+  color: #a16f61;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-dashboard__heading h1 {
+  margin: 0;
+  color: #443630;
+  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+}
+
+.admin-dashboard__heading > p:last-child {
+  margin: 0.35rem 0 0;
+  color: #8d7c73;
+  font-size: 0.83rem;
+}
+
+.admin-dashboard__welcome {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  min-height: 190px;
+  overflow: hidden;
+  padding: clamp(1.2rem, 4vw, 2.5rem);
+  border: 1px solid #eaded7;
+  border-radius: 9px;
+  background:
+    linear-gradient(110deg, #f2e7e0 0%, #faf5ef 72%, #f4eee6 100%);
+}
+
+.admin-dashboard__welcome-mark {
+  display: grid;
+  width: 48px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #d4b5a9;
+  border-radius: 50%;
+  color: #95695b;
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+}
+
+.admin-dashboard__welcome-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-dashboard__welcome-copy h2 {
+  margin: 0;
+  color: #493a34;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+}
+
+.admin-dashboard__welcome-copy > p:last-child {
+  margin: 0.55rem 0 0;
+  color: #806f66;
+  font-size: 0.85rem;
+}
+
+.admin-dashboard__logout {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgb(148 103 89 / 28%);
+  border-radius: 6px;
+  color: #80594e;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.admin-dashboard__logout:hover {
+  background: rgb(255 255 255 / 55%);
+}
+
+@media (max-width: 620px) {
+  .admin-dashboard__welcome {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .admin-dashboard__welcome-mark {
+    width: 40px;
+  }
+
+  .admin-dashboard__logout {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

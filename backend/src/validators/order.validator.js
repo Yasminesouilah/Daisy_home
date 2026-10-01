@@ -16,7 +16,7 @@ const customerSchema = z.object({
 });
 
 const itemSchema = z.object({
-  productId: z.string().regex(/^[a-f\d]{24}$/i, "Identifiant produit invalide."),
+  productId: z.string().min(1, "Identifiant produit invalide."),
   quantity: z.number().int().min(1).max(10),
   variant: z.string().nullable().optional().default(null),
 });

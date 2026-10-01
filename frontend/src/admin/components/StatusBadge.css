@@ -1,0 +1,42 @@
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-badge--active {
+  background: #e0eee2;
+  color: #2e6940;
+}
+
+.status-badge--inactive {
+  background: #eee;
+  color: #666;
+}
+
+.status-badge--pending {
+  background: #fdf1d6;
+  color: #8b5d16;
+}
+
+.status-badge--confirmed {
+  background: #dcebe2;
+  color: #2e6940;
+}
+
+.status-badge--shipped {
+  background: #dce8f0;
+  color: #345d78;
+}
+
+.status-badge--delivered {
+  background: #e3ead5;
+  color: #566b2d;
+}
+
+.status-badge--cancelled {
+  background: #f4dfdc;
+  color: #963d36;
+}

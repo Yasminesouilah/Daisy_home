@@ -15,6 +15,8 @@ async function seed() {
       update: {},
       create: {
         ...rest,
+        images: rest.images,
+        variants: rest.variants || [],
         ...(createdAt ? { createdAt: new Date(createdAt) } : {}),
       },
     });
