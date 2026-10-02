@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { formatPrice } from "../../utils/formatPrice.js";
 import DataTable from "../components/DataTable.jsx";
-import StatusBadge from "../components/StatusBadge.jsx";
-import { getAdminOrders, searchAdminOrders } from "../services/adminOrderService.js";
+import { getAdminOrders, searchAdminOrders, updateOrderStatus } from "../services/adminOrderService.js";
 import "./Orders.css";
 
 const STATUS_FILTERS = [
@@ -23,6 +22,7 @@ export default function Orders() {
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
+	const [updatingOrderId, setUpdatingOrderId] = useState(null);
 
 	useEffect(() => {
 		let active = true;
@@ -54,6 +54,24 @@ export default function Orders() {
 		};
 	}, [status, page, search]);
 
+	async function changeOrderStatus(orderId, nextStatus) {
+		setError("");
+		setUpdatingOrderId(orderId);
+		try {
+			const updatedOrder = await updateOrderStatus(orderId, nextStatus);
+			setOrders((current) => {
+				const updated = current.map((order) => order.id === orderId ? updatedOrder : order);
+				return !search.trim() && status && updatedOrder.status !== status
+					? updated.filter((order) => order.id !== orderId)
+					: updated;
+			});
+		} catch (requestError) {
+			setError(requestError.message || "Impossible de modifier le statut de la commande.");
+		} finally {
+			setUpdatingOrderId(null);
+		}
+	}
+
 	const columns = [
 		{
 			key: "orderNumber",
@@ -63,7 +81,28 @@ export default function Orders() {
 		{ key: "customer", label: "Client", render: (order) => order.customer?.fullName || "—" },
 		{ key: "phone", label: "Téléphone", render: (order) => order.customer?.phone || "—" },
 		{ key: "total", label: "Total", render: (order) => formatPrice(order.total) },
-		{ key: "status", label: "Statut", render: (order) => <StatusBadge status={order.status} /> },
+		{
+			key: "deliveryMethod",
+			label: "Livraison",
+			render: (order) => order.deliveryMethod === "office" ? "Au bureau" : "À domicile",
+		},
+		{
+			key: "status",
+			label: "Statut",
+			render: (order) => (
+				<select
+					className="admin-orders__status-select"
+					aria-label={`Modifier le statut de la commande ${order.orderNumber}`}
+					value={order.status}
+					disabled={updatingOrderId !== null || order.status === "cancelled"}
+					onChange={(event) => changeOrderStatus(order.id, event.target.value)}
+				>
+					{STATUS_FILTERS.filter((option) => option.value).map((option) => (
+						<option key={option.value} value={option.value}>{option.label}</option>
+					))}
+				</select>
+			),
+		},
 		{
 			key: "date",
 			label: "Date",

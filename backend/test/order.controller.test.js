@@ -50,11 +50,19 @@ async function submit(body) {
 
 describe("createOrder", () => {
   beforeEach(() => {
-    state = { stock: product.stock, sequence: 1000, orders: [] };
+    state = {
+      stock: product.stock,
+      sequence: 1000,
+      orders: [],
+      deliveryRate: { homeFee: 400, officeFee: 250 },
+    };
     originalTransaction = prisma.$transaction;
     prisma.$transaction = async (run) => {
       const before = { ...state, orders: [...state.orders] };
       const tx = {
+        deliveryRate: {
+          findUnique: async ({ where }) => where.code === "16" ? state.deliveryRate : null,
+        },
         product: {
           findMany: async ({ where }) =>
             where.id.in.includes(productId) && where.isActive
@@ -94,6 +102,7 @@ describe("createOrder", () => {
   it("uses database prices, server delivery fees, and sequential numbers", async () => {
     const res = await submit({
       ...validRequest,
+      deliveryFee: 1,
       total: 1,
       items: [{ ...validRequest.items[0], price: 1 }],
     });
@@ -104,11 +113,36 @@ describe("createOrder", () => {
     assert.equal(res.body.subtotal, 9000);
     assert.equal(res.body.deliveryFee, 400);
     assert.equal(res.body.total, 9400);
+    assert.equal(res.body.deliveryMethod, "home");
     assert.equal(res.body.customer.wilayaName, "Alger");
     assert.equal(state.stock, 28);
 
     const next = await submit(validRequest);
     assert.equal(next.body.orderNumber, "DH-1002");
+  });
+
+  it("uses the office rate when office delivery is selected", async () => {
+    const res = await submit({ ...validRequest, deliveryMethod: "office" });
+    assert.equal(res.body.deliveryMethod, "office");
+    assert.equal(res.body.deliveryFee, 250);
+    assert.equal(res.body.total, 9250);
+  });
+
+  it("rejects an unsupported delivery method", async () => {
+    await assert.rejects(
+      submit({ ...validRequest, deliveryMethod: "express" }),
+      (error) => error.status === 400,
+    );
+    assert.equal(state.orders.length, 0);
+  });
+
+  it("rejects ordering when the wilaya delivery rate is missing", async () => {
+    state.deliveryRate = null;
+    await assert.rejects(
+      submit(validRequest),
+      (error) => error.status === 400 && error.message.includes("Tarifs de livraison"),
+    );
+    assert.equal(state.orders.length, 0);
   });
 
   it("rolls back stock when order creation fails inside the transaction", async () => {

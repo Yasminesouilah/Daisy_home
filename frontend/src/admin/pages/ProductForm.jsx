@@ -266,7 +266,9 @@ export default function ProductForm() {
 							id="product-category"
 							value={creatingCategory ? NEW_CATEGORY : values.category}
 							onChange={(event) => handleCategorySelect(event.target.value)}
+							required
 						>
+							<option value="" disabled>Choisir une catégorie</option>
 							{categoryOptions.map((category) => (
 								<option key={category.slug} value={category.slug}>{category.name}</option>
 							))}

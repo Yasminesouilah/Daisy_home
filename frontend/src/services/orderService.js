@@ -3,11 +3,12 @@ import { api, hasApi } from "./api.js";
 
 const delay = (ms = 500) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function createOrder({ customer, lines, subtotal, deliveryFee, total }) {
+export async function createOrder({ customer, deliveryMethod = "home", lines, subtotal, deliveryFee, total }) {
   if (hasApi()) {
     return api("/orders", {
       method: "POST",
       body: JSON.stringify({
+        deliveryMethod,
         customer: {
           fullName: customer.fullName,
           phone: customer.phone,
@@ -29,6 +30,7 @@ export async function createOrder({ customer, lines, subtotal, deliveryFee, tota
   return {
     orderNumber: generateOrderId(),
     customer,
+    deliveryMethod,
     items: lines.map((line) => ({
       productId: line.product.id,
       name: line.product.name,

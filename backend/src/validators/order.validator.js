@@ -24,4 +24,5 @@ const itemSchema = z.object({
 export const createOrderSchema = z.object({
   customer: customerSchema,
   items: z.array(itemSchema).min(1, "Le panier est vide."),
+  deliveryMethod: z.enum(["home", "office"]).optional().default("home"),
 });

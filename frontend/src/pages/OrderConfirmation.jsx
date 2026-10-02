@@ -4,13 +4,13 @@ import { formatPrice } from "../utils/formatPrice";
 import SuccessAnimation from "../components/order/SuccessAnimation";
 import Button from "../components/ui/Button/Button";
 import "./OrderConfirmation.css";
-import "./OrderConfirmation.css";
 
 export default function OrderConfirmation() {
 	const { lastOrder } = useOrder();
 	if (!lastOrder) return <Navigate to="/" replace />;
 
 	const { orderNumber, customer, items, subtotal, deliveryFee, total } = lastOrder;
+	const deliveryMethod = lastOrder.deliveryMethod || "home";
 
 	return (
 		<main className="page container confirmation-page">
@@ -31,13 +31,13 @@ export default function OrderConfirmation() {
 				</ul>
 				<dl className="confirmation-page__totals">
 					<div><dt>Sous-total</dt><dd>{formatPrice(subtotal)}</dd></div>
-					<div><dt>Livraison</dt><dd>{deliveryFee === 0 ? "Offerte" : formatPrice(deliveryFee)}</dd></div>
+					<div><dt>Livraison {deliveryMethod === "office" ? "au bureau" : "à domicile"}</dt><dd>{deliveryFee === 0 ? "Offerte" : formatPrice(deliveryFee)}</dd></div>
 					<div className="confirmation-page__total"><dt>Total</dt><dd>{formatPrice(total)}</dd></div>
 				</dl>
 			</section>
 
 			<section className="confirmation-page__delivery">
-				<h2>Adresse de livraison</h2>
+				<h2>{deliveryMethod === "office" ? "Bureau de retrait" : "Adresse de livraison"}</h2>
 				<p>{customer.address}, {customer.commune}, {customer.wilayaName}</p>
 				<p>{customer.phone}</p>
 			</section>

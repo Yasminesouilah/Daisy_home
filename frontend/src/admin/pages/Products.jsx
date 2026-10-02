@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { formatPrice } from "../../utils/formatPrice.js";
 import DataTable from "../components/DataTable.jsx";
 import StatusBadge from "../components/StatusBadge.jsx";
-import { deleteAdminProduct, getAdminProducts } from "../services/adminProductService.js";
+import {
+	deleteAdminProduct,
+	getAdminProducts,
+	updateAdminProduct,
+} from "../services/adminProductService.js";
 import "./Products.css";
 
 export default function Products() {
@@ -13,6 +17,7 @@ export default function Products() {
 	const [productToDelete, setProductToDelete] = useState(null);
 	const [deleteError, setDeleteError] = useState("");
 	const [deleting, setDeleting] = useState(false);
+	const [updatingProductId, setUpdatingProductId] = useState(null);
 	const cancelDeleteRef = useRef(null);
 
 	useEffect(() => {
@@ -62,6 +67,35 @@ export default function Products() {
 		}
 	}
 
+	async function toggleProductActive(product) {
+		setError("");
+		setUpdatingProductId(product.id);
+		try {
+			const updatedProduct = await updateAdminProduct(
+				product.id,
+				{
+					name: product.name,
+					slug: product.slug,
+					category: product.category,
+					price: product.price,
+					oldPrice: product.oldPrice,
+					description: product.description || "",
+					variants: Array.isArray(product.variants) ? product.variants : [],
+					isNew: product.isNew,
+					stock: product.stock,
+					isActive: !product.isActive,
+				},
+				[],
+				Array.isArray(product.images) ? product.images : [],
+			);
+			setProducts((current) => current.map((item) => item.id === product.id ? updatedProduct : item));
+		} catch (requestError) {
+			setError(requestError.message || "Impossible de modifier le statut du produit.");
+		} finally {
+			setUpdatingProductId(null);
+		}
+	}
+
 	const columns = [
 		{
 			key: "image",
@@ -77,7 +111,22 @@ export default function Products() {
 		{
 			key: "isActive",
 			label: "Statut",
-			render: (product) => <StatusBadge status={product.isActive ? "active" : "inactive"} />,
+			render: (product) => (
+				<div className="admin-products__status">
+					<StatusBadge status={product.isActive ? "active" : "inactive"} />
+					<button
+						type="button"
+						className="admin-products__status-toggle"
+						aria-label={`${product.isActive ? "Désactiver" : "Activer"} ${product.name}`}
+						disabled={updatingProductId !== null}
+						onClick={() => toggleProductActive(product)}
+					>
+						{updatingProductId === product.id
+							? "Mise à jour..."
+							: product.isActive ? "Désactiver" : "Activer"}
+					</button>
+				</div>
+			),
 		},
 		{
 			key: "actions",

@@ -96,7 +96,7 @@ export default function OrderDetail() {
           )}
           <dl className="order-detail__totals">
             <div><dt>Sous-total</dt><dd>{formatPrice(order.subtotal)}</dd></div>
-            <div><dt>Livraison</dt><dd>{formatPrice(order.deliveryFee)}</dd></div>
+            <div><dt>Livraison {order.deliveryMethod === "office" ? "au bureau" : "à domicile"}</dt><dd>{formatPrice(order.deliveryFee)}</dd></div>
             <div className="order-detail__total"><dt>Total</dt><dd>{formatPrice(order.total)}</dd></div>
           </dl>
         </section>
@@ -125,9 +125,10 @@ export default function OrderDetail() {
             <dl className="order-detail__customer">
               <div><dt>Nom</dt><dd>{customer.fullName || "—"}</dd></div>
               <div><dt>Téléphone</dt><dd>{customer.phone || "—"}</dd></div>
+              <div><dt>Mode de livraison</dt><dd>{order.deliveryMethod === "office" ? "Au bureau" : "À domicile"}</dd></div>
               <div><dt>Wilaya</dt><dd>{customer.wilayaName || customer.wilaya || "—"}</dd></div>
               <div><dt>Commune</dt><dd>{customer.commune || "—"}</dd></div>
-              <div><dt>Adresse</dt><dd>{customer.address || "—"}</dd></div>
+              <div><dt>{order.deliveryMethod === "office" ? "Bureau de retrait" : "Adresse"}</dt><dd>{customer.address || "—"}</dd></div>
               {customer.notes && <div><dt>Notes</dt><dd>{customer.notes}</dd></div>}
             </dl>
           </section>

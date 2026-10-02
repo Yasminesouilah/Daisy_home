@@ -9,6 +9,7 @@ import ProductForm from "./pages/ProductForm.jsx";
 import Orders from "./pages/Orders.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
 import Messages from "./pages/Messages.jsx";
+import DeliveryRates from "./pages/DeliveryRates.jsx";
 
 export default function AdminApp() {
   return (
@@ -30,6 +31,7 @@ export default function AdminApp() {
           <Route path="orders" element={<Orders />} />
           <Route path="orders/:id" element={<OrderDetail />} />
           <Route path="messages" element={<Messages />} />
+          <Route path="delivery" element={<DeliveryRates />} />
         </Route>
       </Routes>
     </AuthProvider>

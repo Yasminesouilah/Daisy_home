@@ -17,6 +17,16 @@ import {
 	listAdminCategories,
 	createCategory,
 } from "../controllers/admin/category.controller.js";
+import { getDashboardStats } from "../controllers/admin/dashboard.controller.js";
+import {
+	listAdminMessages,
+	markMessageRead,
+	deleteMessage,
+} from "../controllers/admin/message.controller.js";
+import {
+	listAdminDeliveryRates,
+	updateAdminDeliveryRate,
+} from "../controllers/admin/delivery.controller.js";
 import { requireAdmin } from "../middleware/auth.js";
 import { writeLimiter } from "../middleware/rateLimit.js";
 import { upload } from "../middleware/upload.js";
@@ -26,6 +36,7 @@ const router = Router();
 
 router.post("/login", writeLimiter, asyncHandler(login));
 router.get("/me", requireAdmin, asyncHandler(getMe));
+router.get("/dashboard", requireAdmin, asyncHandler(getDashboardStats));
 
 router.get("/products", requireAdmin, asyncHandler(listAdminProducts));
 router.get("/products/:id", requireAdmin, asyncHandler(getAdminProduct));
@@ -40,5 +51,12 @@ router.get("/orders/search", requireAdmin, asyncHandler(searchAdminOrders));
 router.get("/orders", requireAdmin, asyncHandler(listAdminOrders));
 router.get("/orders/:id", requireAdmin, asyncHandler(getAdminOrder));
 router.patch("/orders/:id/status", requireAdmin, asyncHandler(updateOrderStatus));
+
+router.get("/messages", requireAdmin, asyncHandler(listAdminMessages));
+router.patch("/messages/:id/read", requireAdmin, asyncHandler(markMessageRead));
+router.delete("/messages/:id", requireAdmin, asyncHandler(deleteMessage));
+
+router.get("/delivery-rates", requireAdmin, asyncHandler(listAdminDeliveryRates));
+router.patch("/delivery-rates/:code", requireAdmin, asyncHandler(updateAdminDeliveryRate));
 
 export default router;

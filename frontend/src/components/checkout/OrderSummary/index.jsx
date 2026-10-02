@@ -7,7 +7,7 @@ const onImageError = (event) => {
 	event.currentTarget.src = PLACEHOLDER_IMAGE;
 };
 
-export default function OrderSummary({ lines, subtotal, deliveryFee, total, wilayaName }) {
+export default function OrderSummary({ lines, subtotal, deliveryFee, total, wilayaName, deliveryMethod = "home" }) {
 	return (
 		<section className="order-summary" aria-label="Récapitulatif de la commande">
 			<h2>Votre commande</h2>
@@ -28,7 +28,7 @@ export default function OrderSummary({ lines, subtotal, deliveryFee, total, wila
 			</ul>
 			<dl className="order-summary__totals">
 				<div><dt>Sous-total</dt><dd>{formatPrice(subtotal)}</dd></div>
-				<div><dt>Livraison{wilayaName ? ` (${wilayaName})` : ""}</dt><dd>{!wilayaName ? "À calculer" : deliveryFee === 0 ? "Offerte" : formatPrice(deliveryFee)}</dd></div>
+				<div><dt>Livraison {deliveryMethod === "office" ? "au bureau" : "à domicile"}{wilayaName ? ` (${wilayaName})` : ""}</dt><dd>{!wilayaName ? "À calculer" : deliveryFee === 0 ? "Offerte" : formatPrice(deliveryFee)}</dd></div>
 				<div className="order-summary__total"><dt>Total</dt><dd>{formatPrice(total)}</dd></div>
 			</dl>
 		</section>

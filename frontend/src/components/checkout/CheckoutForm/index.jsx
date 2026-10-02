@@ -21,6 +21,17 @@ export default function CheckoutForm({ values, errors, onChange }) {
 				<input id="phone" type="tel" autoComplete="tel" value={values.phone} onChange={handle("phone")} placeholder="Ex : 0555 12 34 56" aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "phone-error" : undefined} />
 				<FieldError id="phone-error">{errors.phone}</FieldError>
 			</div>
+			<fieldset className="delivery-method">
+				<legend>Mode de livraison *</legend>
+				<label className={values.deliveryMethod === "home" ? "is-selected" : ""}>
+					<input type="radio" name="deliveryMethod" value="home" checked={values.deliveryMethod === "home"} onChange={handle("deliveryMethod")} />
+					<span><strong>À domicile</strong><small>Livraison à l'adresse indiquée</small></span>
+				</label>
+				<label className={values.deliveryMethod === "office" ? "is-selected" : ""}>
+					<input type="radio" name="deliveryMethod" value="office" checked={values.deliveryMethod === "office"} onChange={handle("deliveryMethod")} />
+					<span><strong>Au bureau</strong><small>Retrait auprès d'un bureau de livraison</small></span>
+				</label>
+			</fieldset>
 			<div className="field-row">
 				<div className="field">
 					<label htmlFor="wilaya">Wilaya *</label>
@@ -37,8 +48,8 @@ export default function CheckoutForm({ values, errors, onChange }) {
 				</div>
 			</div>
 			<div className="field">
-				<label htmlFor="address">Adresse *</label>
-				<input id="address" autoComplete="street-address" value={values.address} onChange={handle("address")} placeholder="Rue, numéro, repère..." aria-invalid={Boolean(errors.address)} aria-describedby={errors.address ? "address-error" : undefined} />
+				<label htmlFor="address">{values.deliveryMethod === "office" ? "Bureau de retrait souhaité *" : "Adresse *"}</label>
+				<input id="address" autoComplete="street-address" value={values.address} onChange={handle("address")} placeholder={values.deliveryMethod === "office" ? "Nom ou adresse du bureau" : "Rue, numéro, repère..."} aria-invalid={Boolean(errors.address)} aria-describedby={errors.address ? "address-error" : undefined} />
 				<FieldError id="address-error">{errors.address}</FieldError>
 			</div>
 			<div className="field">

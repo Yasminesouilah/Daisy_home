@@ -12,11 +12,14 @@ export async function createOrder(req, res) {
     throw new ApiError(400, firstError);
   }
 
-  const { customer, items } = parsed.data;
+  const { customer, items, deliveryMethod } = parsed.data;
   const wilaya = WILAYAS.find((entry) => entry.code === customer.wilaya);
   if (!wilaya) throw new ApiError(400, "Wilaya invalide.");
 
   const order = await prisma.$transaction(async (tx) => {
+    const deliveryRate = await tx.deliveryRate.findUnique({ where: { code: wilaya.code } });
+    if (!deliveryRate) throw new ApiError(400, "Tarifs de livraison indisponibles pour cette wilaya.");
+
     const requestedQuantities = new Map();
     for (const item of items) {
       requestedQuantities.set(
@@ -79,7 +82,10 @@ export async function createOrder(req, res) {
     }
 
     const subtotal = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : wilaya.fee;
+    const selectedDeliveryFee = deliveryMethod === "office"
+      ? deliveryRate.officeFee
+      : deliveryRate.homeFee;
+    const deliveryFee = subtotal >= FREE_DELIVERY_THRESHOLD ? 0 : selectedDeliveryFee;
     const counter = await tx.counter.upsert({
       where: { id: "orderNumber" },
       update: { seq: { increment: 1 } },
@@ -94,6 +100,7 @@ export async function createOrder(req, res) {
         subtotal,
         deliveryFee,
         total: subtotal + deliveryFee,
+        deliveryMethod,
         paymentMethod: "COD",
         status: "pending",
       },

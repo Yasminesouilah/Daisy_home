@@ -38,6 +38,7 @@ model Order {
   deliveryFee   Float
   total         Float
   paymentMethod String      @default("COD")
+  deliveryMethod DeliveryMethod @default(home)
   status        OrderStatus @default(pending)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
@@ -80,5 +81,18 @@ model Category {
   slug      String   @unique
   image     String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DeliveryMethod {
+  home
+  office
+}
+
+model DeliveryRate {
+  code      String   @id @db.VarChar(2)
+  name      String
+  homeFee   Int
+  officeFee Int
   updatedAt DateTime @updatedAt
 }

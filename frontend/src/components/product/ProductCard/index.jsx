@@ -7,13 +7,14 @@ import { formatPrice } from "../../../utils/formatPrice";
 import Badge from "../../ui/Badge/Badge";
 import Button from "../../ui/Button/Button";
 import QuantitySelector from "../../ui/QuantitySelector/QuantitySelector";
+import { ArrowIcon } from "../../ui/Icons";
 
 const onImageError = (event) => {
   event.currentTarget.onerror = null;
   event.currentTarget.src = PLACEHOLDER_IMAGE;
 };
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, variant }) {
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
   const navigate = useNavigate();
@@ -30,10 +31,14 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <article className="product-card">
+    <article className={`product-card${variant === "rail" ? " product-card--rail" : ""}`}>
       <Link to={productUrl} className="product-card__media">
         {discount > 0 && <Badge variant="sale">-{discount}%</Badge>}
         {discount === 0 && product.isNew && <Badge variant="new">Nouveau</Badge>}
+        <span className="product-card__quick" aria-hidden="true">
+          <span>Découvrir la pièce</span>
+          <ArrowIcon width={16} height={16} />
+        </span>
         <img
           src={product.images?.[0] ?? product.image ?? PLACEHOLDER_IMAGE}
           alt={product.name}
@@ -43,6 +48,9 @@ export default function ProductCard({ product }) {
       </Link>
       <div className="product-card__body">
         <Link to={productUrl} className="product-card__name">{product.name}</Link>
+        {variant === "rail" && product.category && (
+          <span className="product-card__category">{product.category.replaceAll("-", " ")}</span>
+        )}
         <div className="product-card__rating" aria-label={`${product.rating} sur 5, ${product.reviews} avis`}>
           <span aria-hidden="true">{"★".repeat(Math.round(product.rating ?? 0))}</span>
           <span>({product.reviews ?? 0})</span>

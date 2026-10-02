@@ -12,7 +12,15 @@ import PaymentMethod from "../components/checkout/PaymentMethod";
 import Button from "../components/ui/Button/Button";
 import "./Checkout.css";
 
-const EMPTY_VALUES = { fullName: "", phone: "", wilaya: "", commune: "", address: "", notes: "" };
+const EMPTY_VALUES = {
+  fullName: "",
+  phone: "",
+  wilaya: "",
+  commune: "",
+  address: "",
+  notes: "",
+  deliveryMethod: "home",
+};
 
 export default function Checkout() {
   const { lines, subtotal, clearCart, loading } = useCart();
@@ -38,7 +46,11 @@ export default function Checkout() {
   }, []);
 
   const wilaya = wilayas.find((item) => item.code === values.wilaya);
-  const deliveryFee = wilaya ? wilaya.fee : 0;
+  const deliveryFee = wilaya
+    ? values.deliveryMethod === "office"
+      ? wilaya.officeFee ?? wilaya.fee ?? 0
+      : wilaya.homeFee ?? wilaya.fee ?? 0
+    : 0;
   const total = subtotal + deliveryFee;
 
   const handleChange = (field, value) => {
@@ -62,6 +74,7 @@ export default function Checkout() {
     try {
       const order = await createOrder({
         customer: { ...values, wilayaName: wilaya?.name ?? "" },
+        deliveryMethod: values.deliveryMethod,
         lines,
         subtotal,
         deliveryFee,
@@ -86,7 +99,14 @@ export default function Checkout() {
           <PaymentMethod />
         </div>
         <div className="checkout-page__summary">
-          <OrderSummary lines={lines} subtotal={subtotal} deliveryFee={deliveryFee} total={total} wilayaName={wilaya?.name} />
+          <OrderSummary
+            lines={lines}
+            subtotal={subtotal}
+            deliveryFee={deliveryFee}
+            total={total}
+            wilayaName={wilaya?.name}
+            deliveryMethod={values.deliveryMethod}
+          />
           {submitError && <p className="checkout-page__error" role="alert">{submitError}</p>}
           <Button type="submit" size="lg" full disabled={submitting}>{submitting ? "Envoi en cours..." : "Confirmer la commande"}</Button>
           <p className="checkout-page__note">Aucun compte requis. Nous vous contacterons par téléphone pour confirmer votre commande.</p>
