@@ -5,7 +5,7 @@ export default function BrandIntro() {
 	return (
 		<section className="brand-intro container">
 			<Reveal className="brand-intro__image">
-				<img src="/images/Gemini_Generated_Image_75iptm75iptm75ip.jfif" alt="Un intérieur chaleureux signé Daisy Home" loading="lazy" />
+				<img src="/images/hero/hero.png" alt="Un intérieur chaleureux de la collection Daisy Home" loading="lazy" />
 			</Reveal>
 			<div className="brand-intro__text">
 				<Reveal as="p" className="eyebrow" delay={0}>Notre histoire</Reveal>

@@ -11,6 +11,10 @@ const HERO_IMAGES = [
         src: "/images/hero/hero2.png",
         alt: "Collection décoration intérieure Daisy Home",
     },
+    {
+        src: "/images/hero/hero3.png",
+        alt: "Décoration intérieure chic Daisy Home",
+    },
 ];
 
 export default function Hero() {

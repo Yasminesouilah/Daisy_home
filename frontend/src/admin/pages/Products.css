@@ -1,9 +1,45 @@
+/* =========================================================
+   PAGE ENTRANCE
+   ========================================================= */
+
+@keyframes admin-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes admin-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-products {
+  animation: admin-fade-up 420ms var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) both;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .admin-products__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.5rem;
+
+  animation: admin-fade-up 460ms var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) 60ms both;
 }
 
 .admin-products__eyebrow {
@@ -19,20 +55,100 @@
   font-size: 1.7rem;
 }
 
+/* Add-product button: pill shape + shine sweep on hover, like the site's hero CTA */
+
 .admin-products__add {
-  padding: 0.6rem 0.9rem;
+  position: relative;
+  overflow: hidden;
+
+  padding: 0.65rem 1.1rem;
   border: 1px solid #e1cbc2;
-  border-radius: 7px;
+  border-radius: 999px;
   background: #f4e9e4;
-  color: var(--color-white);
+  color: #744d43;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #744d43;
+
+  transition:
+    background-color 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .admin-products__add:hover {
   background: #edddd6;
+  border-color: #d9b6a9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(116, 77, 67, 0.16);
 }
+
+.admin-products__add::before {
+  position: absolute;
+  top: 0;
+  left: -130%;
+
+  width: 80%;
+  height: 100%;
+
+  content: "";
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 650ms ease;
+
+  pointer-events: none;
+}
+
+.admin-products__add:hover::before {
+  left: 140%;
+}
+
+/* =========================================================
+   TABLE — staggered row entrance + hover lift
+   ========================================================= */
+
+.admin-products table,
+.admin-products .data-table {
+  animation: admin-fade-up 500ms var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) 120ms both;
+}
+
+.admin-products tbody tr,
+.admin-products .data-table tbody tr {
+  opacity: 0;
+  animation: admin-row-in 420ms var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) forwards;
+
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+/* Stagger up to the first 12 rows; beyond that they all share the last delay */
+
+.admin-products tbody tr:nth-child(1)  { animation-delay: 160ms; }
+.admin-products tbody tr:nth-child(2)  { animation-delay: 200ms; }
+.admin-products tbody tr:nth-child(3)  { animation-delay: 240ms; }
+.admin-products tbody tr:nth-child(4)  { animation-delay: 280ms; }
+.admin-products tbody tr:nth-child(5)  { animation-delay: 320ms; }
+.admin-products tbody tr:nth-child(6)  { animation-delay: 360ms; }
+.admin-products tbody tr:nth-child(7)  { animation-delay: 400ms; }
+.admin-products tbody tr:nth-child(8)  { animation-delay: 440ms; }
+.admin-products tbody tr:nth-child(9)  { animation-delay: 480ms; }
+.admin-products tbody tr:nth-child(10) { animation-delay: 520ms; }
+.admin-products tbody tr:nth-child(n+11) { animation-delay: 560ms; }
+
+.admin-products tbody tr:hover {
+  background-color: #fbf3ee;
+  transform: translateX(2px);
+  box-shadow: inset 3px 0 0 var(--color-rose-dark);
+}
+
+/* Thumbnail: soft zoom on row hover */
 
 .admin-products__thumb {
   display: block;
@@ -41,7 +157,17 @@
   border-radius: var(--radius-sm);
   background: var(--color-beige);
   object-fit: cover;
+
+  transition: transform 320ms var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1));
 }
+
+.admin-products tbody tr:hover .admin-products__thumb {
+  transform: scale(1.08);
+}
+
+/* =========================================================
+   STATUS TOGGLE
+   ========================================================= */
 
 .admin-products__status {
   display: grid;
@@ -53,10 +179,13 @@
   min-height: 28px;
   color: var(--color-rose-dark);
   font-size: 0.75rem;
+
+  transition: color 180ms ease, transform 180ms ease;
 }
 
 .admin-products__status-toggle:hover:not(:disabled) {
   text-decoration: underline;
+  transform: translateX(2px);
 }
 
 .admin-products__status-toggle:disabled {
@@ -64,14 +193,28 @@
   opacity: 0.6;
 }
 
+/* =========================================================
+   ROW ACTIONS
+   ========================================================= */
+
 .admin-products__actions {
   display: flex;
   gap: 0.75rem;
   white-space: nowrap;
 }
 
+.admin-products__actions a,
+.admin-products__actions button {
+  position: relative;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
 .admin-products__actions a {
   color: var(--color-rose-dark);
+}
+
+.admin-products__actions a:hover {
+  transform: translateY(-1px);
 }
 
 .admin-products__actions button {
@@ -80,6 +223,7 @@
 
 .admin-products__delete-trigger:hover {
   color: #7d2924;
+  transform: translateY(-1px);
 }
 
 .admin-products__actions a:hover,
@@ -87,14 +231,67 @@
   text-decoration: underline;
 }
 
+/* =========================================================
+   FEEDBACK / LOADING STATES
+   ========================================================= */
+
 .admin-products__error {
   margin-bottom: 1rem;
   color: #a33b35;
+
+  animation: admin-fade-up 320ms var(--ease, cubic-bezier(0.22, 0.61, 0.36, 1)) both;
 }
 
 .admin-products__loading {
   padding: 2rem 0;
   color: var(--color-brown-soft);
+
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.admin-products__loading::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+
+  border: 2px solid var(--color-line);
+  border-top-color: var(--color-rose-dark);
+  border-radius: 50%;
+
+  animation: admin-spin 700ms linear infinite;
+}
+
+@keyframes admin-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   DELETE DIALOG — cinematic entrance
+   ========================================================= */
+
+@keyframes admin-backdrop-in {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(2px); }
+}
+
+@keyframes admin-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .admin-delete-dialog__backdrop {
@@ -105,17 +302,22 @@
   place-items: center;
   padding: 1rem;
   background: rgb(45 35 30 / 42%);
-  backdrop-filter: blur(2px);
+
+  animation: admin-backdrop-in 200ms ease-out both;
 }
 
 .admin-delete-dialog {
   width: min(100%, 440px);
   padding: 1.5rem;
   border: 1px solid #eaded7;
-  border-radius: 9px;
+
+  /* Slightly organic corner, echoing the dashboard's blob cards */
+  border-radius: 16px 16px 30px 16px;
+
   background: #fffdfa;
-  box-shadow: 0 18px 55px rgb(47 34 28 / 20%);
-  animation: admin-dialog-enter 150ms ease-out;
+  box-shadow: 0 24px 60px rgb(47 34 28 / 24%);
+
+  animation: admin-dialog-enter 320ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 .admin-delete-dialog__eyebrow {
@@ -141,17 +343,27 @@
 }
 
 .admin-delete-dialog__actions button {
+  position: relative;
+  overflow: hidden;
+
   min-height: 40px;
-  padding: 0.55rem 0.85rem;
+  padding: 0.55rem 0.9rem;
   border: 1px solid #e8dfd8;
-  border-radius: 6px;
+  border-radius: 999px;
   font-size: 0.83rem;
   font-weight: 600;
+
+  transition: background-color 200ms ease, transform 160ms ease, box-shadow 200ms ease;
 }
 
 .admin-delete-dialog__cancel {
   background: #fff;
   color: #6e5f57;
+}
+
+.admin-delete-dialog__cancel:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(74, 47, 39, 0.08);
 }
 
 .admin-delete-dialog__confirm {
@@ -162,6 +374,36 @@
 
 .admin-delete-dialog__confirm:hover:not(:disabled) {
   background: #842f2a;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(163, 59, 53, 0.3);
+}
+
+.admin-delete-dialog__confirm::before {
+  position: absolute;
+  top: 0;
+  left: -130%;
+
+  width: 80%;
+  height: 100%;
+
+  content: "";
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 600ms ease;
+
+  pointer-events: none;
+}
+
+.admin-delete-dialog__confirm:hover:not(:disabled)::before {
+  left: 140%;
 }
 
 .admin-delete-dialog__actions button:disabled {
@@ -173,16 +415,49 @@
   margin-top: 0.8rem;
   color: #a33b35;
   font-size: 0.85rem;
+
+  animation: admin-fade-up 260ms ease-out both;
 }
 
-@keyframes admin-dialog-enter {
-  from { opacity: 0; transform: translateY(6px) scale(0.99); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
 @media (max-width: 640px) {
   .admin-products__header {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-products,
+  .admin-products__header,
+  .admin-products table,
+  .admin-products .data-table,
+  .admin-products tbody tr,
+  .admin-products__error,
+  .admin-delete-dialog__backdrop,
+  .admin-delete-dialog,
+  .admin-delete-dialog__error,
+  .admin-products__add::before,
+  .admin-delete-dialog__confirm::before {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .admin-products tbody tr,
+  .admin-products .data-table tbody tr {
+    opacity: 1;
+    transform: none;
+  }
+
+  .admin-products__loading::before {
+    animation: none;
+    border-top-color: var(--color-line);
   }
 }

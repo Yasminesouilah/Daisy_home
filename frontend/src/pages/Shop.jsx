@@ -12,42 +12,60 @@ import "./Shop.css";
 export default function Shop() {
   const { products, loading, error } = useProducts();
   const filters = useShopFilters(products);
-  const { filtered, q, setQuery, sort, setSort } = filters;
+  const { filtered, q, setQuery, sort, setSort, category, setCategory, categories } = filters;
 
   return (
     <main className="page shop container">
       <div className="shop__head">
-        <div>
-          <p className="eyebrow">Boutique</p>
-          <h1>Tous nos produits</h1>
-        </div>
+        <p className="eyebrow">Boutique Daisy Home</p>
+        <h1>Tous nos produits</h1>
         <SearchBar value={q} onChange={setQuery} />
       </div>
 
-      <div className="shop__layout">
+      <nav className="shop__categories" aria-label="Catégories de produits">
+        <button
+          type="button"
+          aria-pressed={!category}
+          className={!category ? "is-active" : ""}
+          onClick={() => setCategory("")}
+        >
+          Tout
+        </button>
+        {categories.map((item) => (
+          <button
+            key={item.slug}
+            type="button"
+            aria-pressed={category === item.slug}
+            className={category === item.slug ? "is-active" : ""}
+            onClick={() => setCategory(item.slug)}
+          >
+            {item.name}
+          </button>
+        ))}
+      </nav>
+
+      <p className="shop__count" aria-live="polite">
+        {loading ? "Chargement..." : `${filtered.length} pièce${filtered.length !== 1 ? "s" : ""}`}
+      </p>
+
+      <div className="shop__toolbar">
         <FilterSidebar {...filters} />
-        <div className="shop__results">
-          <div className="shop__toolbar">
-            <span className="shop__count">
-              {loading ? "Chargement..." : `${filtered.length} produit${filtered.length !== 1 ? "s" : ""}`}
-            </span>
-            <SortSelect value={sort} onChange={setSort} />
-          </div>
-          <ActiveFilters {...filters} />
-          {loading ? (
-            <ProductGridSkeleton count={8} />
-          ) : error ? (
-            <p className="shop__state" role="alert">Les produits sont momentanément indisponibles.</p>
-          ) : filtered.length === 0 ? (
-            <div className="shop__state shop__empty">
-              <p>Aucun produit ne correspond à votre recherche.</p>
-              <Button variant="outline" onClick={filters.clearAll}>Réinitialiser les filtres</Button>
-            </div>
-          ) : (
-            <ProductGrid products={filtered} />
-          )}
-        </div>
+        <ActiveFilters {...filters} />
+        <SortSelect value={sort} onChange={setSort} />
       </div>
+
+      {loading ? (
+        <ProductGridSkeleton count={8} />
+      ) : error ? (
+        <p className="shop__state" role="alert">Les produits sont momentanément indisponibles.</p>
+      ) : filtered.length === 0 ? (
+        <div className="shop__state shop__empty">
+          <p>Aucun produit ne correspond à votre recherche.</p>
+          <Button variant="outline" onClick={filters.clearAll}>Réinitialiser les filtres</Button>
+        </div>
+      ) : (
+        <ProductGrid products={filtered} variant="shop" />
+      )}
     </main>
   );
 }

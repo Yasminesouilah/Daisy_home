@@ -5,7 +5,7 @@ import { resolveImageUrl } from "../../../config/constants";
 import { ArrowIcon } from "../../ui/Icons";
 
 const INTERVAL = 1500; // time between slides
-const SLIDE_MS = 100;  // must match --slide in the CSS
+const SLIDE_MS = 900;  // must match --slide in the CSS
 
 const onImageError = (event) => {
     event.currentTarget.onerror = null;

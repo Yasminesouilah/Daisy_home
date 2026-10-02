@@ -31,7 +31,7 @@ export default function ProductCard({ product, variant }) {
   };
 
   return (
-    <article className={`product-card${variant === "rail" ? " product-card--rail" : ""}`}>
+    <article className={`product-card${variant === "rail" ? " product-card--rail" : variant === "shop" ? " product-card--shop" : ""}`}>
       <Link to={productUrl} className="product-card__media">
         {discount > 0 && <Badge variant="sale">-{discount}%</Badge>}
         {discount === 0 && product.isNew && <Badge variant="new">Nouveau</Badge>}
@@ -48,7 +48,7 @@ export default function ProductCard({ product, variant }) {
       </Link>
       <div className="product-card__body">
         <Link to={productUrl} className="product-card__name">{product.name}</Link>
-        {variant === "rail" && product.category && (
+        {(variant === "rail" || variant === "shop") && product.category && (
           <span className="product-card__category">{product.category.replaceAll("-", " ")}</span>
         )}
         <div className="product-card__rating" aria-label={`${product.rating} sur 5, ${product.reviews} avis`}>

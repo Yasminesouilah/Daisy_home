@@ -12,10 +12,10 @@ const PRICE_STEPS = [
 	{ label: "Plus de 6 000 DA", min: 6000, max: null },
 ];
 
-function FilterContent({ category, categories = CATEGORIES, setCategory, min, max, setPriceRange }) {
+function FilterContent({ category, categories = CATEGORIES, setCategory, min, max, setPriceRange, showCategories = true }) {
 	return (
 		<>
-			<div className="filter-group">
+			{showCategories && <div className="filter-group">
 				<h2>Catégories</h2>
 				<ul>
 					<li><button type="button" className={!category ? "is-active" : ""} onClick={() => setCategory("")}>Toutes</button></li>
@@ -25,7 +25,7 @@ function FilterContent({ category, categories = CATEGORIES, setCategory, min, ma
 						</li>
 					))}
 				</ul>
-			</div>
+			</div>}
 			<div className="filter-group">
 				<h2>Prix</h2>
 				<ul>
@@ -58,7 +58,7 @@ export default function FilterSidebar(props) {
 
 	return (
 		<>
-			<aside className="filter-sidebar" aria-label="Filtres produits"><FilterContent {...props} /></aside>
+			<aside className="filter-sidebar" aria-label="Filtres produits"><FilterContent {...props} showCategories={false} /></aside>
 			<Button variant="outline" size="sm" className="filter-trigger" onClick={() => setMobileOpen(true)}>
 				Filtres{props.activeCount > 0 ? ` (${props.activeCount})` : ""}
 			</Button>
@@ -68,7 +68,7 @@ export default function FilterSidebar(props) {
 					<h2>Filtres</h2>
 					<button type="button" onClick={() => setMobileOpen(false)} aria-label="Fermer les filtres"><CloseIcon /></button>
 				</div>
-				<div className="filter-drawer__body"><FilterContent {...props} /></div>
+				<div className="filter-drawer__body"><FilterContent {...props} showCategories={false} /></div>
 				<div className="filter-drawer__footer"><Button full onClick={() => setMobileOpen(false)}>Voir les résultats</Button></div>
 			</section>
 		</>

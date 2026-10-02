@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../../../hooks/useProducts";
 import ProductGrid from "../../product/ProductGrid";
@@ -9,31 +9,35 @@ import { ArrowIcon } from "../../ui/Icons";
 export default function BestSellers() {
 	const { data, loading, error } = useProducts();
 	const railRef = useRef(null);
+	const [loopMetrics, setLoopMetrics] = useState(null);
 	const products = [...data].sort((first, second) => second.popularity - first.popularity).slice(0, 8);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const rail = railRef.current;
-		if (!rail || products.length === 0) return;
+		if (!rail || products.length < 2) return;
 
-		const cards = rail.querySelectorAll(".product-grid > .reveal");
-		const featuredCard = cards[Math.min(2, cards.length - 1)];
-		if (!featuredCard) return;
+		const measureTrack = () => {
+			const card = rail.querySelector(".product-grid > .reveal");
+			const track = rail.querySelector(".product-grid");
+			if (!card || !track) return;
 
-		const railBounds = rail.getBoundingClientRect();
-		const cardBounds = featuredCard.getBoundingClientRect();
-		const cardCenter = cardBounds.left - railBounds.left + cardBounds.width / 2;
-		rail.scrollLeft += cardCenter - rail.clientWidth / 2;
+			const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 24;
+			const step = card.getBoundingClientRect().width + gap;
+			const distance = step * products.length;
+			const centeredStart = distance
+				+ Number.parseFloat(getComputedStyle(track).paddingLeft)
+				+ step / 2;
+			setLoopMetrics({
+				start: centeredStart,
+				distance,
+				duration: distance / 55,
+			});
+		};
+
+		measureTrack();
+		window.addEventListener("resize", measureTrack);
+		return () => window.removeEventListener("resize", measureTrack);
 	}, [products.length]);
-
-	const moveRail = (direction) => {
-		const rail = railRef.current;
-		const card = rail?.querySelector(".product-grid > .reveal");
-		const track = rail?.querySelector(".product-grid");
-		if (!rail || !card || !track) return;
-
-		const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 24;
-		rail.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap) });
-	};
 
 	return (
 		<section className="best-sellers">
@@ -46,14 +50,6 @@ export default function BestSellers() {
 						<Link to="/shop?sort=popular" className="best-sellers__view-all">
 							Voir tout <ArrowIcon width={18} height={18} />
 						</Link>
-						<div className="best-sellers__arrows">
-							<button className="best-sellers__arrow best-sellers__arrow--previous" type="button" onClick={() => moveRail(-1)} aria-label="Produits précédents" disabled={products.length < 2}>
-								<ArrowIcon width={18} height={18} />
-							</button>
-							<button className="best-sellers__arrow" type="button" onClick={() => moveRail(1)} aria-label="Produits suivants" disabled={products.length < 2}>
-								<ArrowIcon width={18} height={18} />
-							</button>
-						</div>
 					</div>
 				</div>
 				{error && <p className="best-sellers__status" role="alert">Les produits sont momentanément indisponibles.</p>}
@@ -67,8 +63,25 @@ export default function BestSellers() {
 				</div>
 			)}
 			{!loading && !error && products.length > 0 && (
-				<div className="best-sellers__viewport" ref={railRef} tabIndex={0} role="region" aria-roledescription="carousel" aria-label="Produits les plus populaires">
-					<ProductGrid products={products} variant="rail" />
+				<div
+					className={`best-sellers__viewport${loopMetrics ? " best-sellers__viewport--animated" : ""}`}
+					ref={railRef}
+					tabIndex={0}
+					role="region"
+					aria-roledescription="carousel"
+					aria-label="Produits les plus populaires"
+					style={loopMetrics ? {
+						"--carousel-start": `${loopMetrics.start}px`,
+						"--carousel-distance": `${loopMetrics.distance}px`,
+						"--carousel-duration": `${loopMetrics.duration}s`,
+					} : undefined}
+				>
+					<ProductGrid
+						products={[...products, ...products, ...products]}
+						variant="rail"
+						accessibleStartIndex={products.length}
+						accessibleEndIndex={products.length * 2}
+					/>
 				</div>
 			)}
 		</section>
