@@ -29,32 +29,46 @@ export default function Login() {
 	return (
 		<main className="admin-login">
 			<form className="admin-login__form" onSubmit={handleSubmit}>
-				<p className="admin-login__eyebrow">Espace de gestion</p>
+				<p className="admin-login__eyebrow">Administration</p>
 				<h1>Daisy Home</h1>
-				<p className="admin-login__subtitle">Connectez-vous à votre espace administrateur.</p>
+				<p className="admin-login__subtitle">Espace administrateur</p>
 
 				<div className="admin-login__field">
 					<label htmlFor="admin-email">Adresse e-mail</label>
-					<input
-						id="admin-email"
-						type="email"
-						autoComplete="username"
-						value={email}
-						onChange={(event) => setEmail(event.target.value)}
-						required
-					/>
+					<div className="admin-login__input-wrap">
+						<input
+							id="admin-email"
+							type="email"
+							autoComplete="username"
+							placeholder="Adresse e-mail"
+							value={email}
+							onChange={(event) => setEmail(event.target.value)}
+							required
+						/>
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+							<circle cx="12" cy="8" r="4" />
+							<path d="M5 21a7 7 0 0 1 14 0" />
+						</svg>
+					</div>
 				</div>
 
 				<div className="admin-login__field">
 					<label htmlFor="admin-password">Mot de passe</label>
-					<input
-						id="admin-password"
-						type="password"
-						autoComplete="current-password"
-						value={password}
-						onChange={(event) => setPassword(event.target.value)}
-						required
-					/>
+					<div className="admin-login__input-wrap">
+						<input
+							id="admin-password"
+							type="password"
+							autoComplete="current-password"
+							placeholder="Mot de passe"
+							value={password}
+							onChange={(event) => setPassword(event.target.value)}
+							required
+						/>
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+							<rect x="4" y="10" width="16" height="11" rx="2" />
+							<path d="M8 10V7a4 4 0 1 1 8 0v3M12 14v3" />
+						</svg>
+					</div>
 				</div>
 
 				{error && <p className="admin-login__error" role="alert">{error}</p>}

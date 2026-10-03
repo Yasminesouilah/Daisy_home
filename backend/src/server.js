@@ -3,15 +3,21 @@ import { prisma } from "./lib/prisma.js";
 import app from "./app.js";
 
 async function start() {
-  await prisma.$connect();
-  console.log("Database connected (via Prisma)");
+  try {
+    // Connect to the database
+    await prisma.$connect();
+    console.log("Database connected (via Prisma)");
 
-  app.listen(env.port, () => {
-    console.log(`Daisy Home API running on http://localhost:${env.port}`);
-  });
+    // Start the Express server
+    app.listen(env.port, "0.0.0.0", () => {
+      console.log(
+        `Daisy Home API running on port ${env.port} (${env.nodeEnv})`
+      );
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  }
 }
 
-start().catch((err) => {
-  console.error("Failed to start server:", err);
-  process.exit(1);
-});
+start();

@@ -1,23 +1,38 @@
 .admin-login {
+  position: relative;
+  box-sizing: border-box;
   min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: var(--color-cream);
+  isolation: isolate;
+  background-image:
+    linear-gradient(120deg, rgba(47, 31, 25, 0.58), rgba(90, 58, 49, 0.38)),
+    url("/images/hero/hero3.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.admin-login::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(47, 31, 25, 0.18), transparent 45%, rgba(47, 31, 25, 0.12));
+  content: "";
 }
 
 .admin-login__form {
-  width: min(100%, 400px);
-  padding: 2.5rem;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
-  background: var(--color-white);
-  box-shadow: var(--shadow-lift);
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  padding: 1rem 0;
+  color: var(--color-cream);
 }
 
 .admin-login__eyebrow {
   margin: 0 0 0.5rem;
-  color: var(--color-rose-dark);
+  color: var(--color-rose-soft);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -27,59 +42,85 @@
 
 .admin-login__form h1 {
   margin: 0;
-  font-size: 2rem;
+  color: var(--color-cream);
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 600;
   text-align: center;
 }
 
 .admin-login__subtitle {
-  margin: 0.75rem 0 2rem;
-  color: var(--color-brown-soft);
+  margin: 0.35rem 0 2.4rem;
+  color: rgba(250, 246, 241, 0.84);
   font-size: 0.9rem;
   text-align: center;
 }
 
 .admin-login__field {
-  display: grid;
-  gap: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .admin-login__field label {
-  color: var(--color-brown-soft);
-  font-size: 0.85rem;
-  font-weight: 600;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }
 
-.admin-login__field input {
+.admin-login__input-wrap {
+  position: relative;
+}
+
+.admin-login__input-wrap input {
   width: 100%;
-  min-height: 46px;
-  padding: 0.7rem 0.85rem;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-sm);
-  background: var(--color-white);
-  color: var(--color-brown);
+  min-height: 54px;
+  padding: 0.8rem 3rem 0.8rem 1.25rem;
+  border: 1px solid rgba(250, 246, 241, 0.76);
+  border-radius: var(--radius-pill);
+  background: rgba(250, 246, 241, 0.1);
+  color: var(--color-cream);
+  font: inherit;
+  backdrop-filter: blur(5px);
 }
 
-.admin-login__field input:focus {
-  border-color: var(--color-rose-dark);
-  outline: 2px solid var(--color-rose-soft);
+.admin-login__input-wrap input::placeholder {
+  color: rgba(250, 246, 241, 0.72);
+}
+
+.admin-login__input-wrap input:focus {
+  border-color: var(--color-rose-soft);
+  outline: 2px solid rgba(236, 213, 207, 0.55);
   outline-offset: 1px;
+}
+
+.admin-login__input-wrap svg {
+  position: absolute;
+  top: 50%;
+  right: 1.1rem;
+  width: 21px;
+  height: 21px;
+  color: var(--color-cream);
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
 .admin-login__error {
   margin: 0 0 1rem;
-  color: #a33b35;
+  color: #fff1ed;
   font-size: 0.875rem;
 }
 
 .admin-login__submit {
   width: 100%;
-  min-height: 48px;
-  margin-top: 0.25rem;
+  min-height: 52px;
+  margin-top: 1rem;
   border-radius: var(--radius-pill);
   background: var(--color-rose-dark);
   color: var(--color-white);
   font-weight: 600;
+  letter-spacing: 0.04em;
   transition: background var(--transition), opacity var(--transition);
 }
 
@@ -100,6 +141,46 @@
 
 @media (max-width: 480px) {
   .admin-login__form {
-    padding: 2rem 1.25rem;
+    padding: 1rem 0.25rem;
+  }
+
+  .admin-login__form h1 {
+    font-size: 2.35rem;
+  }
+}
+
+@media (max-height: 520px) {
+  .admin-login {
+    padding-block: 0.75rem;
+  }
+
+  .admin-login__form {
+    padding-block: 0;
+  }
+
+  .admin-login__eyebrow {
+    margin-bottom: 0.15rem;
+  }
+
+  .admin-login__form h1 {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .admin-login__subtitle {
+    margin: 0.15rem 0 0.65rem;
+  }
+
+  .admin-login__field {
+    margin-bottom: 0.45rem;
+  }
+
+  .admin-login__input-wrap input {
+    min-height: 44px;
+  }
+
+  .admin-login__submit {
+    min-height: 42px;
+    margin-top: 0.3rem;
   }
 }
